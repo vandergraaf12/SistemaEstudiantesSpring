@@ -120,12 +120,24 @@ public class EstudiantesApplication implements CommandLineRunner {
 
 			}
 			case 5 -> {
-
+				logger.info("Eliminar estudiante: " + nl);
+				logger.info("Id Estudiante: ");
+				var idEstudiante = Integer.parseInt(consola.nextLine());
+				// Buscamos el estudiante a eliminar
+				Estudiante estudiante = estudianteServicio.buscarEstudiantePorId(idEstudiante);
+				if (estudiante != null){
+					estudianteServicio.eliminarEstudiante(estudiante);
+					logger.info("Estudiante eliminado: " + estudiante + nl);
+				}
+				else{
+					logger.info("Estudiante No encontrado con id: " + idEstudiante + nl);
+				}
 			}
-			case 6 -> {
-
+			case 6 -> { // Salir
+				logger.info("Hasta pronto!" + nl + nl);
+				salir = true;
 			}
-			default -> logger.info("Opción no reconocida.");
+			default -> logger.info("Opción NO reconocida.");
 		}
 		return salir;
 	}
