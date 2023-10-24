@@ -63,16 +63,60 @@ public class EstudiantesApplication implements CommandLineRunner {
 				List<Estudiante> estudiantes = estudianteServicio.listarEstudiantes();
 				estudiantes.forEach((estudiante -> logger.info(estudiante.toString() + nl)));
 			}
-			case 2 -> {
-				//logger.info("Introduce el id_estudiante a buscar: ");
-				//var idEstudiante = Integer.parseInt(consola.nextLine());
-				//var estudiante = new Estudiante();
-				//var encontrado = estudianteServicio.buscarEstudiantePorId(estudiante.);
+			case 2 -> { // Buscar estudiante por id
+				logger.info("Introduce el id_estudiante a buscar: ");
+				var idEstudiante = Integer.parseInt(consola.nextLine());
+				Estudiante estudiante = estudianteServicio.buscarEstudiantePorId(idEstudiante);
+				if (estudiante != null )
+					logger.info("Estudiante encontrado: " + estudiante + nl);
+				else
+					logger.info("Estudiante No encontrado con id: " + idEstudiante + nl);
 			}
-			case 3 -> {
+			case 3 -> { // Agregar estudiante
+				logger.info("Agregar Estudiante: " + nl);
+				logger.info("Nombre: ");
+				var nombre = consola.nextLine();
+				logger.info("Apellido: ");
+				var apellido = consola.nextLine();
+				logger.info("Telefono: ");
+				var telefono = consola.nextLine();
+				logger.info("Email: ");
+				var email = consola.nextLine();
+				// Crear el objeto estudiante sin el id
+				var estudiante = new Estudiante();
+				estudiante.setNombre(nombre);
+				estudiante.setApellido(apellido);
+				estudiante.setTelefono(telefono);
+				estudiante.setEmail(email);
+				estudianteServicio.guardarEstudiante(estudiante);
+				logger.info("Estudiante agregado: " + estudiante + nl);
 
 			}
-			case 4 -> {
+			case 4 -> { //Modificar Estudiante
+				logger.info("Modificar estudiante: " + nl);
+				logger.info("Id Estudiante: ");
+				var idEstudiante = Integer.parseInt(consola.nextLine());
+				// Buscamos el estudiante a modificar
+				Estudiante estudiante = estudianteServicio.buscarEstudiantePorId(idEstudiante);
+				if (estudiante != null){
+					logger.info("Nombre: ");
+					var nombre = consola.nextLine();
+					logger.info("Apellido: ");
+					var apellido = consola.nextLine();
+					logger.info("Telefono: ");
+					var telefono = consola.nextLine();
+					logger.info("Email: ");
+					var email = consola.nextLine();
+					estudiante.setNombre(nombre);
+					estudiante.setApellido(apellido);
+					estudiante.setTelefono(telefono);
+					estudiante.setEmail(email);
+					estudianteServicio.guardarEstudiante(estudiante);
+					logger.info("Estudiante modificado: " + estudiante + nl);
+				}
+				else{
+					logger.info("Estudiante No encontrado con id: " + idEstudiante + nl);
+				}
 
 			}
 			case 5 -> {
